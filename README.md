@@ -1694,9 +1694,9 @@ Strukt Owl
 
 AI package. Mostly text analysis. More to come...
 
-<!-- ![Won](/home/pitsolu/Desktop/dev/php/strukt/strukt-owl/owl.jpg "Owl") -->
+<!-- ![Won](owl.jpg "Owl") -->
 
-<center><img src="/home/pitsolu/Desktop/dev/php/strukt/strukt-owl/owl.jpg" width="200" height="200"></center>
+<center><img src="owl.jpg" width="200" height="200"></center>
 
 ## Usage
 
