@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>strukt</title>
+  <link rel="stylesheet" href="github-markdown.css">
+  <!-- <link rel="stylesheet" href="default.css"> -->
+  <!-- <script src="highlight.min.js"></script>
+  <script>hljs.highlightAll();</script> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+
+<script>hljs.highlightAll();</script>
+</head>
+<body>
+<h1 id="strukt">Strukt</h1>
+<p><strong>Table of Contents</strong>  <em>generated with <a href="https://github.com/thlorenz/doctoc">DocToc</a></em></p>
+<ul>
+<li><a href="#strukt-installer">Strukt Installer</a><ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Usage</a></li>
+</ul>
+</li>
+<li><a href="#strukt">Strukt</a><ul>
+<li><a href="#getting-started">Getting started</a></li>
+<li><a href="#generate-application">Generate Application</a></li>
+<li><a href="#generate-module">Generate Module</a></li>
+<li><a href="#execute-shell">Execute Shell</a><ul>
+<li><a href="#cli">Cli</a></li>
+</ul>
+</li>
+<li><a href="#cli-utility">Cli Utility</a></li>
+<li><a href="#run-application">Run Application</a><ul>
+<li><a href="#notes">Notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#strukt-framework">Strukt Framework</a><ul>
+<li><a href="#getting-started-1">Getting started</a><ul>
+<li><a href="#setup-cache-configuration--environment">Setup, Cache, Configuration &amp; Environment</a></li>
+</ul>
+</li>
+<li><a href="#cache">Cache</a></li>
+<li><a href="#shell">Shell</a></li>
+<li><a href="#setting-application-type">Setting Application Type</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#environment-setup">Environment Setup</a></li>
+<li><a href="#setup-packages-registry">Setup Packages Registry</a><ul>
+<li><a href="#packages">Packages</a></li>
+</ul>
+</li>
+<li><a href="#default-package">Default Package</a></li>
+<li><a href="#building-packages">Building Packages</a></li>
+<li><a href="#package-autoloading">Package Autoloading</a></li>
+<li><a href="#note">Note</a><ul>
+<li><a href="#validator">Validator</a></li>
+</ul>
+</li>
+<li><a href="#example">Example</a></li>
+<li><a href="#validator-annotations">Validator Annotations</a></li>
+<li><a href="#adding-validators">Adding Validators</a></li>
+</ul>
+</li>
+<li><a href="#strukt-router">Strukt Router</a><ul>
+<li><a href="#getting-started">Getting Started</a><ul>
+<li><a href="#quick-start">Quick Start</a></li>
+</ul>
+</li>
+<li><a href="#advanced-router-the-nitty-gritty">Advanced Router (The Nitty Gritty)</a><ul>
+<li><a href="#permissions">Permissions</a></li>
+<li><a href="#authentication">Authentication</a></li>
+<li><a href="#environment">Environment</a></li>
+<li><a href="#apache">Apache</a></li>
+</ul>
+</li>
+<li><a href="#btw-db-tip">BTW, DB Tip...</a></li>
+</ul>
+</li>
+<li><a href="#strukt-commons">Strukt Commons</a><ul>
+<li><a href="#usage-1">Usage</a><ul>
+<li><a href="#collection">Collection</a></li>
+</ul>
+</li>
+<li><a href="#value-objects">Value Objects</a><ul>
+<li><a href="#datetime">DateTime</a></li>
+<li><a href="#today-date-influence">Today (Date Influence)</a></li>
+<li><a href="#string">String</a></li>
+<li><a href="#array">Array</a></li>
+</ul>
+</li>
+<li><a href="#others">Others</a><ul>
+<li><a href="#token-query">Token Query</a></li>
+<li><a href="#messages">Messages</a></li>
+<li><a href="#json">Json</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#strukt-console">Strukt Console</a><ul>
+<li><a href="#block-spaces-important">Block Spaces (IMPORTANT)</a></li>
+<li><a href="#usage-2">Usage</a></li>
+</ul>
+</li>
+<li><a href="#strukt-key">Strukt-Key</a><ul>
+<li><a href="#installation-1">Installation</a><ul>
+<li><a href="#composer">Composer</a></li>
+</ul>
+</li>
+<li><a href="#hashing">Hashing</a><ul>
+<li><a href="#bcrypt">Bcrypt</a></li>
+<li><a href="#sha256-doubled">Sha256 (Doubled)</a></li>
+</ul>
+</li>
+<li><a href="#public--private-keys">Public &amp; Private Keys</a></li>
+<li><a href="#auto-generate-keys">Auto generate keys</a><ul>
+<li><a href="#use-existing-key">Use existing key</a></li>
+<li><a href="#encrypt-message-with-public-key">Encrypt message with Public Key</a></li>
+<li><a href="#encrypt-with-password">Encrypt with password</a></li>
+</ul>
+</li>
+<li><a href="#certificate-signing-request-csr">Certificate Signing Request (CSR)</a><ul>
+<li><a href="#sign--verify-certificate">Sign &amp; verify certificate</a></li>
+</ul>
+</li>
+<li><a href="#note-1">Note</a></li>
+</ul>
+</li>
+<li><a href="#strukt-process">Strukt Process</a><ul>
+<li><a href="#installation-2">Installation</a></li>
+<li><a href="#demo">Demo</a></li>
+</ul>
+</li>
+<li><a href="#strukt-event">Strukt Event</a><ul>
+<li><a href="#events">Events</a></li>
+<li><a href="#reflector">Reflector</a></li>
+<li><a href="#loop">Loop</a></li>
+</ul>
+</li>
+<li><a href="#strukt-fs">Strukt Fs</a><ul>
+<li><a href="#usage-3">Usage</a><ul>
+<li><a href="#api">API</a></li>
+<li><a href="#helpers">Helpers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#strukt-generator">Strukt Generator</a><ul>
+<li><a href="#intro">Intro</a></li>
+<li><a href="#templator">Templator</a></li>
+<li><a href="#annotations">Annotations</a></li>
+</ul>
+</li>
+<li><a href="#strukt-math">Strukt Math</a><ul>
+<li><a href="#number-value-objects">Number (Value Objects)</a></li>
+<li><a href="#matrix">Matrix</a></li>
+<li><a href="#monad">Monad</a></li>
+</ul>
+</li>
+<li><a href="#strukt-base">Strukt Base</a><ul>
+<li><a href="#usage-4">Usage</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li><a href="#tasker">Tasker</a><ul>
+<li><a href="#getting-started-2">Getting started</a></li>
+<li><a href="#usage-5">Usage</a></li>
+<li><a href="#boxing">Boxing</a></li>
+</ul>
+</li>
+<li><a href="#strukt-queue">Strukt Queue</a><ul>
+<li><a href="#requirements">Requirements</a><ul>
+<li><a href="#usage-6">Usage</a></li>
+</ul>
+</li>
+<li><a href="#wait">Wait</a></li>
+<li><a href="#reply">Reply</a><ul>
+<li><a href="#other-usages">Other Usages</a></li>
+</ul>
+</li>
+<li><a href="#pop">Pop</a></li>
+<li><a href="#push">Push</a><ul>
+<li><a href="#credits">Credits</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#strukt-owl">Strukt Owl</a><ul>
+<li><a href="#usage-7">Usage</a><ul>
+<li><a href="#sentiment-analysis-vader-score">Sentiment Analysis: Vader Score</a></li>
+<li><a href="#tags-ranking">Tags: Ranking</a></li>
+<li><a href="#summarize">Summarize</a></li>
+<li><a href="#highlights">Highlights</a></li>
+</ul>
+</li>
+<li><a href="#credits-1">Credits</a></li>
+</ul>
+</li>
+<li><a href="#strukt-contract">Strukt Contract</a></li>
+<li><a href="#strukt-db">Strukt Db</a><ul>
+<li><a href="#transaction">Transaction</a></li>
+<li><a href="#commands">Commands</a></li>
+<li><a href="#sql">SQL</a></li>
+</ul>
+</li>
+<li><a href="#strukt-asset">Strukt Asset</a><ul>
+<li><a href="#installation-3">Installation</a></li>
+<li><a href="#simple-asset-manager">Simple Asset Manager</a></li>
+<li><a href="#image-resize">Image Resize</a></li>
+</ul>
+</li>
+<li><a href="#strukt-auth">Strukt Auth</a></li>
+<li><a href="#strukt-tests">Strukt Tests</a><ul>
+<li><a href="#installation-4">Installation</a><ul>
+<li><a href="#getting-started-1">Getting Started</a></li>
+</ul>
+</li>
+<li><a href="#installation-5">Installation</a><ul>
+<li><a href="#package-development">Package Development</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="strukt-installer">Strukt Installer</h1>
+<h2 id="installation">Installation</h2>
+<pre><code class="language-bash">composer global require &quot;strukt/install&quot;
+</code></pre>
+<h2 id="usage">Usage</h2>
+<p>Create your application.</p>
+<pre><code class="language-bash">strukt new payroll
+cd payroll
+</code></pre>
+<p>Install available packages and publish.</p>
+<pre><code class="language-bash">strukt add tests --publish
+</code></pre>
+<p>Available packages:</p>
+<ul>
+<li>db</li>
+<li>auth</li>
+<li>tests</li>
+<li>asset</li>
+</ul>
+<p>Update Installer.</p>
+<pre><code class="language-bash">strukt update:me
+</code></pre>
+<h1 id="strukt-strukt">Strukt Strukt</h1>
+<h3 id="getting-started">Getting started</h3>
+<pre><code class="language-bash">composer create-project strukt/strukt:1.1.8-alpha --prefer-dist
+</code></pre>
+<p>Listing console commands:</p>
+<pre><code class="language-bash">./xcli -l
+</code></pre>
+<h3 id="generate-application">Generate Application</h3>
+<pre><code class="language-bash">./xcli app:make payroll
+</code></pre>
+<p>The file structure generated should look as below:</p>
+<pre><code class="language-bash">app
+└── src
+    └── Payroll
+        ├── AuthModule
+        │   ├── Controller
+        │   │   └── User.php
+        │   ├── Form
+        │   │   └── User.php
+        │   ├── PayrollAuthModule.php
+        │   ├── Router
+        │   │   ├── Auth.php
+        │   │   └── Index.php
+        │   └── Tests
+        │       └── UserTest.php
+        └── User.php # Models are stored in the root of your app (i.e payroll)
+
+</code></pre>
+<p>There is a default module i.e <code>AuthModule</code> when you generate an application. Folders generated in a module (facets) can be changed in <code>cfg/module.ini</code> this also indicates part of alias used to access classes/objects. You&#39;ll also find a config file <code>cfg/app.ini</code> that holds the active application name.</p>
+<p>When an application or module is created/generated it is loaded by running the command below, otherwise strukt won&#39;t detect it:</p>
+<pre><code class="language-bash">./xcli app:reload
+</code></pre>
+<p>The above command will create a <code>App/Loader.php</code> in the <code>lib/</code> folder at the root of your project. This file should NEVER be edited because everything will be overwritten once the above command is rerun. </p>
+<h3 id="generate-module">Generate Module</h3>
+<p>Command syntax for generating a module:</p>
+<pre><code class="language-bash">./xcli make:module &lt;app_name&gt; &lt;module_name&gt; &lt;module_alias&gt;
+</code></pre>
+<p>Example command:</p>
+<pre><code class="language-bash">./xcli make:module payroll human_resource hr
+</code></pre>
+<p>Now the file structure should look as below:</p>
+<pre><code class="language-bash">app/
+└── src
+    └── Payroll
+        ├── AuthModule
+        └── HumanResourceModule
+</code></pre>
+<p>Remember to run the <code>app:reload</code> command to load the module.</p>
+<h3 id="execute-shell">Execute Shell</h3>
+<p><code>strukt-strukt</code> uses <a href="https://github.com/bobthecow/psysh">Psysh</a>.</p>
+<p>To drop into shell:</p>
+<pre><code class="language-bash">$ ./xcli shell:exec
+ ls
+    Variables: $core
+ $core-&gt;get(&quot;au.ctr.User&quot;)-&gt;getAll()
+    &quot;AuthModule\Controller\User::getAll Not Yet Implemented!&quot;
+ $core-&gt;get(&quot;User&quot;)
+    Payroll\User {#...
+</code></pre>
+<h2 id="cli">Cli</h2>
+<p>View <code>providers</code> and <code>middlewares</code></p>
+<pre><code class="language-bash">./xcli sys:ls middlewares # view for console
+</code></pre>
+<p>View <code>index.php</code> middlewares</p>
+<pre><code class="language-bash">./xcli sys:ls middlewares --idx # view for index.php
+</code></pre>
+<p>You can also view <code>providers</code> by replacing <code>middlewares</code></p>
+<h3 id="cli-utility">Cli Utility</h3>
+<p>Enable and disable <code>commands</code> , <code>middlewares</code> and <code>providers</code></p>
+<p>Example:</p>
+<pre><code class="language-bash">./xcli sys:util enable commands pub-make
+</code></pre>
+<h3 id="run-application">Run Application</h3>
+<pre><code class="language-bash">./xcli app:exec
+</code></pre>
+<p>Uses <code>.env</code> <code>server_{var}</code> variables to run application.</p>
+<h2 id="notes">Notes</h2>
+<p>The <code>make:router</code> and <code>make:module</code> commands will not work on cli console until you run <code>app:make</code> and <code>app:reload</code> commands are run respectively.</p>
+<p><strong>IMPORTANT</strong>: The folder <code>.tpl/</code> in the root of the project contains <code>sgf/</code> folder that contains class template files used to generate the application modules and migrations. Ensure to <strong>NOT</strong> change it until you&#39;ve understood <a href="https://github.com/pitsolu/strukt-generator">strukt-generator</a></p>
+<p>Have a good one!</p>
+<h1 id="strukt-framework">Strukt Framework</h1>
+<p>The is the package that unifies all <a href="https://github.com/samweru/strukt-strukt">strukt-strukt</a><br>components under the framework.</p>
+<p>Rarely should anyone use this on its own.</p>
+<h3 id="getting-started">Getting started</h3>
+<pre><code class="language-bash">echo {&quot;minimum-stability&quot;:&quot;dev&quot;} &gt; composer.json
+composer require &quot;strukt/framework:1.1.8-alpha&quot; --prefer-dist
+</code></pre>
+<h2 id="setup-cache-configuration-environment">Setup, Cache, Configuration &amp; Environment</h2>
+<h3 id="cache">Cache</h3>
+<p>Always remember to clear and reload the cache when necessary</p>
+<pre><code class="language-bash">./xcli cache:clear 
+./xcli cache:make
+</code></pre>
+<h3 id="shell">Shell</h3>
+<p>Drop into shell</p>
+<pre><code class="language-bash">./xcli shell:exec
+</code></pre>
+<h3 id="setting-application-type">Setting Application Type</h3>
+<pre><code class="language-php">config(&quot;app.type&quot;, &quot;App:Idx&quot;)// for index.php, alternative App:Cli for console
+</code></pre>
+<h3 id="configuration">Configuration</h3>
+<pre><code class="language-php">config(&quot;facet.middlewares&quot;)
+config(&quot;facet.providers&quot;)
+</code></pre>
+<h3 id="environment-setup">Environment Setup</h3>
+<p>This class is defaultly found in <a href="https://github.com/samweru/strukt-commons">strukt-commons</a></p>
+<pre><code class="language-php">Strukt\Env::withFile();//default .env file in your root folder
+Strukt\Env::withFile(&quot;.env-dev&quot;);
+env(&quot;root_dir&quot;, getcwd());//setter custom environment variable
+env(&quot;root_dir&quot;);//getter
+</code></pre>
+<h3 id="setup-packages-registry">Setup Packages Registry</h3>
+<p>Packages reference file location <code>./cfg/repo.ini</code></p>
+<pre><code class="language-php">repos(); //list all repositories
+repos(&quot;published&quot;);//list all published strukt packages
+repos(&quot;installed&quot;);//list all installed strukt packages
+</code></pre>
+<h2 id="packages">Packages</h2>
+<h3 id="default-package">Default Package</h3>
+<pre><code class="language-php">package(&quot;core&quot;, &quot;App:Idx&quot;)-&gt;get(&quot;settings&quot;); //returns array of middlewares, commands and providers
+//below mode:App:Cli is default
+package(&quot;core&quot;)-&gt;get(&quot;name&quot;);//core
+package(&quot;core&quot;)-&gt;get(&quot;cmd:name&quot;);//null
+package(&quot;core&quot;)-&gt;get(&quot;files&quot;);//null
+package(&quot;core&quot;)-&gt;get(&quot;modules&quot;);//null
+package(&quot;core&quot;)-&gt;get(&quot;is:published&quot;);//true by default
+package(&quot;core&quot;)-&gt;get(&quot;requirements&quot;);//null or array
+</code></pre>
+<p>The above methods are interfaced in class <code>Strukt\Framework\Contract\Package</code> you must use them in your package.</p>
+<h3 id="building-packages">Building Packages</h3>
+<p>The first step in developing your package will require you to install <code>strukt-framework</code><br>and execute <code>composer exec strukt-cfg</code> command that will create your folder structure. You&#39;ll need to create <code>src</code> and <code>package</code> folders. </p>
+<p>See structure of package below:</p>
+<pre><code class="language-bash">├── bootstrap.php
+├── cfg/
+├── console
+├── index.php
+├── lib/
+├── tpl/
+├── vendor/
+├── composer.json
+├── LICENSE
+├── package/ #Place all your packages files here
+├── README.md
+└── src
+    └── Strukt
+        └── Package
+            └── Pkg{{Package Name}}.php #Identify your package resources here
+</code></pre>
+<p>Again, your package class in <code>src/Strukt/Package/Pkg&lt;Package Name&gt;.php</code> will have methods<br>listed in <code>Strukt\Fraamework\Contract\Package</code></p>
+<h3 id="package-autoloading">Package Autoloading</h3>
+<p>You may require to autoload libraries both from your root directory and package resources.</p>
+<pre><code class="language-php">$loader = require &quot;vendor/autoload.php&quot;;
+...
+...
+$loader-&gt;addPsr4(&quot;App\\&quot;, [
+
+    __DIR__.&quot;/lib/App&quot;,
+    __DIR__.&quot;/package/lib/App&quot;
+]);
+
+return $loader;
+</code></pre>
+<h3 id="note">Note</h3>
+<p>For packages that require installation into your <code>app/src/{{AppName}}</code> folder, there<br>are a few tricks you could use while building your package. The <code>publish:package</code> command<br>takes argument <code>&lt;package&gt;</code> for publishing packages that are currently in development,<br>since your source will be in the root folder in a subfolder called <code>package</code>. </p>
+<p>This will require you to enter into your <code>cfg/repo.php</code> and indicate you are currently in-development with the key/keyword <code>package</code> which will allow the publisher to install files in the your app source folder <code>app/src</code>.</p>
+<p>The <code>publish:package</code> command installs from <code>vendor</code> but in development-mode you can use <code>--dev</code> switch<br>to install your package that will be located in your project root.</p>
+<h2 id="validator">Validator</h2>
+<h3 id="example">Example</h3>
+<pre><code class="language-php">namespace Payroll\AuthModule\Form;
+
+use Strukt\Framework\Contract\Form as AbstractForm;
+
+class User extends AbstractForm{
+
+    /**
+    * @IsNotEmpty()
+    * @IsAlpha()
+    */
+    public string $username;
+
+    /**
+    * @IsNotEmpty()
+    */
+    public string $password;
+}
+</code></pre>
+<h3 id="validator-annotations">Validator Annotations</h3>
+<pre><code class="language-php">/**
+* @IsNotEmpty()
+* @IsAlpha()
+* @IsAlphaNum()
+* @IsNumeric()
+* @IsEmail()
+* @IsDate(Y-m-d)
+* @IsIn(a,b,c)
+* @EqualTo(xyz)
+* @IsLen(10)
+*/
+</code></pre>
+<h3 id="adding-validators">Adding Validators</h3>
+<p>New validators can be added is in your <code>lib/App/Validator.php</code><br>There you can find an example <code>App\Validator::isLenGt</code></p>
+<pre><code class="language-php">/**
+* @IsLenGt(10)
+*/
+</code></pre>
+<h1 id="strukt-router">Strukt Router</h1>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="quick-start">Quick Start</h3>
+<p>Create <code>composer.json</code> script with contents below then run <code>composer update</code></p>
+<pre><code class="language-js">{
+    &quot;require&quot;:{
+
+        &quot;strukt/router&quot;:&quot;v1.1.5-alpha&quot;
+    },
+    &quot;minimum-stability&quot;:&quot;dev&quot;
+}
+</code></pre>
+<p>Your <code>index.php</code> file.</p>
+<pre><code class="language-php">require &quot;vendor/autoload.php&quot;;
+
+use Strukt\Http\Request;
+// use Strukt\Http\Response\Plain as Response;
+
+$app = new Strukt\Router\QuickStart();
+
+$app-&gt;get(&quot;/&quot;, function(Request $request){
+
+    // return new Response(&quot;Hello World!&quot;);
+    return &quot;Hello World!&quot;;
+});
+
+exit($app-&gt;run());
+</code></pre>
+<h2 id="advanced-router-the-nitty-gritty-">Advanced Router (The Nitty Gritty)</h2>
+<h3 id="permissions">Permissions</h3>
+<pre><code class="language-php">$app-&gt;inject(&quot;permissions&quot;, function(){
+
+    return array(
+
+        // &quot;show_secrets&quot;
+    );
+});
+
+$app-&gt;providers(array(
+
+    //App\Provider\ExampleProvider::class
+));
+
+$app-&gt;middlewares(array(
+
+    Strukt\Router\Middleware\Session::class,
+    Strukt\Router\Middleware\Authentication::class,
+    Strukt\Router\Middleware\Authorization::class,
+));
+
+$app-&gt;get(&quot;/user/secrets&quot;, function(){
+
+    return &quot;Shh!&quot;;
+
+},&quot;show_secrets&quot;);
+
+exit($app-&gt;run());
+</code></pre>
+<h3 id="authentication">Authentication</h3>
+<pre><code class="language-php">$app-&gt;inject(&quot;permissions&quot;, function(){
+
+    return [];
+});
+
+$app-&gt;inject(&quot;session&quot;, function(){
+
+    return new Strukt\Http\Session\Native;
+});
+
+$app-&gt;inject(&quot;verify&quot;, function(Strukt\Http\Session\Native $session){
+
+    $user = new Strukt\User();
+    $user-&gt;setUsername($session-&gt;get(&quot;username&quot;));
+
+    return $user;
+});
+
+$app-&gt;providers(array(
+
+    //App\Provider\ExampleProvider::class
+));
+
+$app-&gt;middlewares(array(
+
+    Strukt\Router\Middleware\Session::class,
+    Strukt\Router\Middleware\Authentication::class,
+    Strukt\Router\Middleware\Authorization::class,
+));
+
+$app-&gt;post(&quot;/login&quot;, function(Strukt\Http\Request $request){
+
+    $username = $request-&gt;get(&quot;username&quot;);
+    $password = $request-&gt;get(&quot;password&quot;);
+
+    $request-&gt;getSession()-&gt;set(&quot;username&quot;, $username);
+
+    return new Strukt\Http\Response\Plain(sprintf(&quot;User %s logged in.&quot;, $username));
+});
+
+$app-&gt;get(&quot;/current/user&quot;, function(Strukt\Http\Request $request){
+
+    return $request-&gt;getSession()-&gt;get(&quot;username&quot;);
+});
+
+$app-&gt;get(&quot;/logout&quot;, function(Strukt\Http\Request $request){
+
+    $request-&gt;getSession()-&gt;invalidate();
+
+    return new Strukt\Http\Response\Plain(&quot;User logged out.&quot;);
+});
+
+exit($app-&gt;run());
+</code></pre>
+<h3 id="environment">Environment</h3>
+<p>After installation run  <code>composer exec static</code> to get <code>public\</code> directory.</p>
+<pre><code>    public/
+    ├── errors
+    │   ├── 403.html
+    │   ├── 404.html
+    │   ├── 405.html
+    │   └── 500.html
+    └── static
+        ├── css
+        │   └── style.css
+        ├── index.html
+        └── js
+            └── script.js
+</code></pre><h3 id="apache">Apache</h3>
+<p><code>.htaccess</code> file:</p>
+<pre><code>DirectoryIndex index.php
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule . index.php [L]
+</code></pre><h2 id="btw-db-tip-">BTW, DB Tip...</h2>
+<p><a href="adminer.org">Adminer</a> is a really neat tool! It is a single file dba and can be placed<br>under a router easily! Download the adminer.php file and place in root folder.</p>
+<pre><code class="language-php">$app-&gt;any(&quot;/dba&quot;, function(Request $request){
+
+    include &quot;./adminer-x.x.x.php&quot;;
+
+    return new Strukt\Http\Response\Plain();
+});
+</code></pre>
+<p>Cheers!</p>
+<h1 id="strukt-commons">Strukt Commons</h1>
+<h2 id="usage">Usage</h2>
+<h3 id="collection">Collection</h3>
+<pre><code class="language-php">$contact = collect([]);
+$contact-&gt;set(&quot;mobile&quot;, &quot;+2540770123456&quot;);
+$contact-&gt;set(&quot;work-phone&quot;, &quot;+2540202345678&quot;);
+
+$user = collect([]);
+$user-&gt;set(&quot;contacts&quot;, $contact);
+$user-&gt;get(&quot;contacts.mobile&quot;); //outputs +2540770123456
+
+$s = array(
+    &quot;user&quot;=&gt;array(
+        &quot;firstname&quot;=&gt;&quot;Gene&quot;,
+        &quot;surname&quot;=&gt;&quot;Wilder&quot;,    
+        &quot;db&quot;=&gt;array(
+            &quot;config&quot;=&gt;array(
+                &quot;username&quot;=&gt;&quot;root&quot;,
+                &quot;password&quot;=&gt;&quot;_root!&quot;
+            )
+        ),
+        &quot;mobile_numbers&quot;=&gt;array( //Non Assoc Array
+            &quot;777111222&quot;,
+            &quot;770234567&quot;
+        )
+    )
+);
+
+$b = collect($s);
+$x = $b-&gt;get(&quot;user.db.config.username&quot;); //returns root
+</code></pre>
+<h2 id="value-objects">Value Objects</h2>
+<p>You may also find <code>Number</code> object via package <code>strukt/math</code> that is a dependency of this package.</p>
+<h3 id="datetime">DateTime</h3>
+<pre><code class="language-php">$start = when()
+$end = when(&quot;+30 days&quot;);
+$rand = $start-&gt;rand($end);//make start date random date between start and end
+$end-&gt;gt($start);//true
+$end-&gt;gte($start);//true
+$start-&gt;lt($end);
+$end-&gt;lte($end);//true
+$start-&gt;equals($end);//false
+$start-&gt;same(new DateTime);//true -- is the same day
+$newStart = $start-&gt;clone();
+$newStartPlusOneDay = $start-&gt;clone(&quot;+1 day&quot;);
+$start-&gt;reset();//reset time to 00:00:00 000000
+$start-&gt;last();//reset time to 23:59:59 1000000
+echo $start; //return date as string
+</code></pre>
+<h3 id="today-date-influence-">Today (Date Influence)</h3>
+<pre><code class="language-php">// $p = period(when(&quot;1900-01-01&quot;), when(&quot;1963-12-31&quot;)); 
+$p = period()
+
+//In order for date influence to work the first 2 line below must be 
+// called before any further date manipulation
+// messing arround with dates can create headaches
+$p-&gt;create(when(&quot;1900-01-01&quot;), when(&quot;1963-12-31&quot;)); //period
+$p-&gt;reset(when(&quot;1960-03-23&quot;));//create fake today
+$fakeToday = today();
+
+//All dates created with Strukt\Type\DateTime will be in 1960
+$fakeToday-&gt;same(new DateTime); //false
+$fakeToday-&gt;same(when());//true
+$fakeToday-&gt;hasPeriod()//true -- has period
+$fakeToday-&gt;withDate(when(&quot;1959-04-01&quot;))-&gt;isValid(); //true -- is date valid with period
+
+// $fakeToday-&gt;getState(&quot;period.start&quot;);
+// $fakeToday-&gt;getState(&quot;period.end&quot;);
+$fakeToday-&gt;getState();//get state of date manipulation
+$fakeToday-&gt;reset();//reset back to original today
+</code></pre>
+<h3 id="string">String</h3>
+<pre><code class="language-php">$str = str(&quot;Strukt Framework&quot;);
+$str-&gt;empty();//false
+$str-&gt;startsWith(&quot;Str&quot;);//true
+$str-&gt;endsWith(&quot;work&quot;);//true
+$str-&gt;first(3);//Str
+$str-&gt;last(4);//work
+$str-&gt;contains(&quot;Frame&quot;);//true
+$str-&gt;slice(7,5)-&gt;equals(&quot;Frame&quot;);//true
+$str-&gt;replace(&quot;work&quot;, &quot;play&quot;)-&gt;equals(&quot;Strukt Frameplay&quot;);
+$str-&gt;replaceFirst(&quot;k&quot;,&quot;c&quot;)-&gt;equals(&quot;Struct Framework&quot;);
+$str-&gt;replaceLast(&quot;k&quot;,&quot;d&quot;)-&gt;equals(&quot;Struct Frameword&quot;);
+$str-&gt;replaceAt(&quot;ing&quot;, 3, 3)-&gt;equals(&quot;String Framwork&quot;)
+$str-&gt;toUpper();//STRUKT FRAMEWORK
+$str-&gt;toLower();//strukt framework
+$camel = str(&quot;thisIsCamelCase&quot;);
+$camel-&gt;toSnake();//this_is_camel_case
+$camel-&gt;toSnake()-&gt;toCamel();//ThisIsCamelCase
+$sdo = $str-&gt;prepend(&quot;Doctrine + &quot;);//Doctrine + Strukt Framework
+$sdo-&gt;concat(&quot; = Strukt Do&quot;);//Doctrine + Strukt Framework = Strukt Do
+$str-&gt;split(&quot; &quot;);//[&#39;Strukt&#39;, &quot;Framework&quot;]
+str(&quot;blah blah blah&quot;)-&gt;count(&quot;blah&quot;);//3
+</code></pre>
+<h3 id="array">Array</h3>
+<pre><code class="language-php">$rr = array(
+    &quot;firstname&quot;=&gt;&quot;Bruce&quot;,
+    &quot;lastname&quot;=&gt;&quot;Wayne&quot;,
+    &quot;alias&quot;=&gt;&quot;Joker&quot;,
+    &quot;contacts&quot; =&gt;array(
+        &quot;email&quot;=&gt;&quot;brucewayne@wayneent.com&quot;,
+        &quot;address&quot;=&gt;array(
+
+            &quot;street&quot;=&gt;&quot;Boulavard of Broken Dreams&quot;,
+            &quot;building&quot;=&gt;&quot;Wayne Co.&quot;
+        )
+    )
+);
+
+$arr = arr($rr);//Arr::create($rr)
+$arr-&gt;has(&quot;Banner&quot;)//false
+$arr-&gt;empty();//false
+$arr-&gt;length();//3
+$arr-&gt;count();//3
+$arr-&gt;next();//true
+$arr-&gt;current()-&gt;yield();//Wayne
+$arr-&gt;key();//lastname
+$arr-&gt;last()-&gt;equals($rr[&quot;contacts&quot;]);
+$arr-&gt;reset();
+$arr = $arr-&gt;each(function($key, $val){ //loop
+
+    if($key == &quot;alias&quot;)
+        $val = &quot;Batman&quot;;
+
+    return $val;
+});
+$arr = $arr-&gt;recur(function($key, $val){ //recursive iterate 
+
+    if($key == &quot;building&quot;)
+        $val = &quot;Wayne Co. &amp; Associates&quot;;
+
+    return $val;
+});
+$origarr = $arr-&gt;yield();
+$rawarr = $arr-&gt;map(array( //reformat array
+
+    &quot;email_contact&quot;=&gt;&quot;contacts.email&quot;,
+    &quot;address_street&quot;=&gt;&quot;contacts.address.street&quot;,
+    &quot;address_building&quot;=&gt;&quot;contacts.address.building&quot;
+));
+$arr-&gt;pop();// remove at end of array.
+$arr-&gt;push(&quot;brucebatman&quot;, &quot;username&quot;);//add at end of queue. key is optional
+$arr-&gt;enqueue(&quot;active&quot;, &quot;status&quot;);//same as Arr.push. key is optional
+$arr-&gt;enqueueBatch([&quot;empty&quot;,&quot;empty&quot;]);
+$arr-&gt;prequeue(&quot;admin&quot;, &quot;type&quot;);//add at beginning of queue. key is optional
+$arr-&gt;dequeue();//remove at beginning of array. returns Bruce
+$flatarr = $arr-&gt;level();//flattens multidimentional array
+$is_assoc = arr([&quot;username&quot;=&gt;&quot;pitsolu&quot;, &quot;password&quot;=&quot;redacted&quot;])-&gt;isMap();//is fully associative arr
+$arr = arr(array(
+    array(
+        &quot;username&quot;=&gt;&quot;pitsolu&quot;,
+        &quot;type&quot;=&gt;&quot;admin&quot;
+    ),
+    array(
+        &quot;username&quot;=&gt;&quot;peterparker&quot;,
+        &quot;type&quot;=&gt;&quot;user&quot;
+    )
+));
+$arr-&gt;column(&quot;type&quot;);//returns array(&quot;admin&quot;, &quot;user&quot;)
+$arr = arr(array(
+
+    &quot;user&quot;=&gt;&quot;pitsolu&quot;,
+    &quot;type&quot;=&gt;&quot;admin&quot;,
+    &quot;status&quot;=&gt;&quot;active&quot;
+));
+$arr-&gt;tokenize();//returns user:pitsolu|type:admin|status:active
+$arr-&gt;concat(&quot;,&quot;)//pitsolu,admin,active
+arr([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;])-&gt;isOfStr();// true
+arr([1,2,3])-&gt;isOfNum();// true 
+arr([&quot;a&quot;,&quot;a&quot;,&quot;b&quot;,&quot;b&quot;,&quot;b&quot;,&quot;c&quot;,&quot;c&quot;,&quot;d&quot;])-&gt;distict()-&gt;yield();//[&quot;a&quot; =&gt; 2,&quot;b&quot; =&gt; 3,&quot;c&quot; =&gt; 2,&quot;d&quot; =&gt; 1]
+arr([&quot;a&quot;,&quot;b&quot;,&quot;b&quot;,&quot;c&quot;,&quot;c&quot;,&quot;c&quot;,&quot;d&quot;])-&gt;uniq()-&gt;yield();//[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;]
+arr([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;])-&gt;slice(2)//[&quot;c&quot;,&quot;d&quot;]
+arr([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;])-&gt;slice(1,3)//[&quot;b&quot;,&quot;c&quot;,&quot;d&quot;]
+
+$x = [&quot;name&quot;=&gt;&quot;peter&quot;,&quot;email&quot;=&gt;&quot;peter@gmail.com&quot;];
+arr($x)-&gt;only([&quot;email&quot;])-&gt;yield()//[&quot;email&quot;=&gt;&quot;peter@gmail.com&quot;]
+
+$x = [[&quot;name&quot;=&gt;&quot;peter&quot;,&quot;email&quot;=&gt;&quot;peter@gmail.com&quot;], [&quot;name&quot;=&gt;&quot;john&quot;,&quot;email&quot;=&gt;&quot;john@gmail.com&quot;]]
+arr($x)-&gt;order()-&gt;asc(&quot;email&quot;)-&gt;yield()//sorting 2d array by column
+arr($x)-&gt;nested();//is nested array - true
+arr([1,2,3])-&gt;product();//6
+arr([&quot;ab&quot;,&quot;cd&quot;,&quot;ef&quot;])-&gt;has(&quot;ab&quot;);//true
+arr([&quot;a&quot;=&gt;1,&quot;b&quot;=&gt;2,&quot;c&quot;=&gt;3])-&gt;contains(&quot;a&quot;)//true
+arr([&quot;a&quot;=&gt;1,&quot;b&quot;=&gt;2,&quot;c&quot;=&gt;3])-&gt;values()//[1,2,3]
+arr([&quot;a&quot;,&quot;b&quot;])-&gt;merge([&quot;c&quot;,&quot;d&quot;])-&gt;yield();//[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;]
+arr([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;])-&gt;reverse()-&gt;yield();//[&quot;d&quot;,&quot;c&quot;,&quot;b&quot;,&quot;a&quot;]
+</code></pre>
+<h2 id="others">Others</h2>
+<h3 id="token-query">Token Query</h3>
+<pre><code class="language-php">/**
+ * Basic Token 
+ */
+$token = &quot;user:pitsolu|status:active|is_superuser:true&quot;;
+
+$query = token($token);
+
+$query-&gt;get(&quot;user&quot;);//pitsolu
+$query-&gt;get(&quot;status&quot;);//active
+$query-&gt;get(&quot;is_superuser&quot;);//true
+
+$query-&gt;has(&quot;role&quot;);//false
+$query-&gt;keys();//[&quot;user&quot;,&quot;status&quot;,&quot;is_superuser&quot;]
+
+$query-&gt;token();//original token -- user:pitsolu|status:active|is_superuser:true
+$query-&gt;set(&quot;role&quot;,&quot;admin&quot;);
+$query-&gt;yield();//user:pitsolu|status:active|is_superuser:true|role:admin
+
+/**
+ * Complex Token
+ */
+$token = &quot;contact:1|is:tenant,landlord,prospect&quot;;
+
+$query = token($token);
+
+$query-&gt;get(&quot;is&quot;);//[&quot;tenant&quot;,&quot;landlord&quot;,&quot;prospect&quot;];
+$query-&gt;set(&quot;status&quot;, [&quot;active&quot;,&quot;published&quot;]);
+$query-&gt;yield();//contact:1|is:tenant,landlord,prospect|status:active,published
+</code></pre>
+<h3 id="messages">Messages</h3>
+<pre><code class="language-php">msg(&quot;error 401!&quot;);
+msg(&quot;error 402!&quot;);
+msg(&quot;error 404!&quot;);
+
+$errors = msg()-&gt;get();
+
+$errors-&gt;last()-&gt;yield(); //error 404!
+$errors-&gt;reset();
+$errors-&gt;current()-&gt;yield(); //error 401!
+$errors-&gt;next();
+$errors-&gt;current()-&gt;yield(); //error 402!
+</code></pre>
+<h3 id="json">Json</h3>
+<pre><code class="language-php">$l = json(array(&quot;fname&quot;=&gt;&quot;Peter&quot;, &quot;lname&quot;=&gt;&quot;Pan&quot;));//json string
+$l-&gt;encode();//json string
+$m = $l-&gt;pp();//pretty print
+$n = $l-&gt;decode();//array
+json(&quot;{}&quot;)-&gt;valid();// is valid json. will return true
+</code></pre>
+<h1 id="strukt-console">Strukt Console</h1>
+<p>This is a console framework that utilises <code>DocBlock</code> to parse command description and format.</p>
+<h2 id="block-spaces-important-">Block Spaces (IMPORTANT)</h2>
+<p>This package uses <code>DocBlock</code> to generate your commands. The <code>DocBlock</code> must be in single spaces<br>and <em>NOT</em> tabs. Be conservative with the spaces and don&#39;t leave any that are unnecessary<br>otherwise the commands will not work.</p>
+<h2 id="usage">Usage</h2>
+<p>Sample Command:</p>
+<pre><code class="language-php">namespace Command;
+
+use Strukt\Console\Input;
+use Strukt\Console\Output;
+use \Strukt\Console\Command as AbstractCommand;
+
+/**
+* mysql:auth          MySQL Authentication
+* 
+* Usage:
+*   
+*      mysql:auth &lt;database&gt; --username &lt;username&gt; --password &lt;password&gt; [--host &lt;127.0.0.1&gt;]
+*
+* Arguments:
+*
+*      database  MySQL database name - optional argument
+* 
+* Options:
+* 
+*      --username -u   MySQL Username
+*      --password -p   MySQL Password
+*      --host -h       MySQL Host - optional default 127.0.0.1
+*/
+class MySQLAuth extends AbstractCommand{ 
+
+    public function execute(Input $in, Output $out){
+
+        $out-&gt;add(sprintf(&quot;%s:%s:%s&quot;, 
+                            $in-&gt;get(&quot;database&quot;), 
+                            $in-&gt;get(&quot;username&quot;), 
+                            $in-&gt;get(&quot;password&quot;)));
+    }
+}
+</code></pre>
+<p>Add this in your executable file:</p>
+<pre><code class="language-php">#!/usr/bin/php
+&lt;?php
+$app = new Strukt\Console\Application(&quot;Strukt Console&quot;);
+$app-&gt;add(new Command\MySQLAuth);
+$app-&gt;run($_SERVER[&quot;argv&quot;]);
+</code></pre>
+<p>Call command:</p>
+<pre><code class="language-bash">php console mysql:auth payroll -u root -p p@55w0rd
+</code></pre>
+<p>Prompt for input and masked input, you may but need not describe promted input<br>in command docblock:</p>
+<pre><code class="language-php">...
+//prompt for input
+$username = $in-&gt;getInput(&quot;Username:&quot;);
+$nickname = $in-&gt;getInput(&quot;Nickname:&quot;);
+//masked input
+$password = $in-&gt;getMaskedInput(&quot;Password:&quot;);
+$cpassword = $in-&gt;getMaskedInput(&quot;Confirm Password:&quot;);
+...
+</code></pre>
+<h1 id="strukt-key">Strukt-Key</h1>
+<h2 id="installation">Installation</h2>
+<h3 id="composer">Composer</h3>
+<p>Create <code>composer.json</code> script with contents below then run <code>composer update</code></p>
+<pre><code class="language-js">{
+    &quot;require&quot;:{
+
+        &quot;strukt/key&quot;:&quot;v1.1.0-alpha&quot;
+    },
+    &quot;minimum-stability&quot;:&quot;dev&quot;
+}
+</code></pre>
+<h2 id="hashing">Hashing</h2>
+<h3 id="bcrypt">Bcrypt</h3>
+<pre><code class="language-php">$hash = bcry(&quot;p@55w0rd&quot;)-&gt;encode();
+$success = bcry(&quot;p@55w0rd&quot;)-&gt;verify($hash);
+</code></pre>
+<h3 id="sha256-doubled-">Sha256 (Doubled)</h3>
+<pre><code class="language-php">$hash = sha256dbl(&#39;p@55w0rd&#39;);
+</code></pre>
+<h2 id="public-private-keys">Public &amp; Private Keys</h2>
+<h2 id="auto-generate-keys">Auto generate keys</h2>
+<pre><code class="language-php">// $k = Strukt\Ssl\All::makeKeys();
+$ks = ssl()-&gt;getKeys();
+$ks-&gt;getPrivateKey()-&gt;getPem();//get Private Key
+$ks-&gt;getPublicKey()-&gt;getPem();//get Public Key
+$c = $ks-&gt;useCipher();
+$enc = $c-&gt;encrypt(&quot;p@55w0rd&quot;);
+$dec = $c-&gt;decrypt($enc);
+</code></pre>
+<h3 id="use-existing-key">Use existing key</h3>
+<p>You can generate your key via <code>ssh-keygen</code> if you wantta.</p>
+<pre><code class="language-php">$file = &quot;file:///home/churchill/.ssh/id_rsa&quot;
+// $k = Strukt\Ssl\All::keyPath($file)
+$k = ssl($file);
+</code></pre>
+<h3 id="encrypt-message-with-public-key">Encrypt message with Public Key</h3>
+<pre><code class="language-php">$message = &quot;Hi! My name is (what?)
+My name is (who?)
+My name is
+Slim Shady
+Hi! My name is (huh?)
+My name is (what?)
+My name is
+Slim Shady&quot;;
+
+$file = &quot;file:///home/churchill/.ssh/id_rsa.pub&quot;
+
+// $p = new Strukt\Ssl\KeyPair();//No Private Key
+// $p-&gt;setPublicKey($file);
+$p = keypair()-&gt;setPublicKey($file); //No Private Key
+
+// $enc = Strukt\Ssl\All::useKeys($p)-&gt;toSend($message);
+$enc = ssl($p)-&gt;toSend($message);
+</code></pre>
+<h3 id="encrypt-with-password">Encrypt with password</h3>
+<pre><code class="language-php">// $p = new Strukt\Ssl\KeyPair($path, &quot;p@55w0rd&quot;);
+// $p-&gt;getPublicKey(); // Trigger public key extraction from private key
+$p = keypair($path, &quot;p@55w0rd&quot;)-&gt;getPublicKey();
+
+// $k = Strukt\Ssl\All::useKeys($p)
+$k = ssl($p);
+</code></pre>
+<h2 id="certificate-signing-request-csr-">Certificate Signing Request (CSR)</h2>
+<h3 id="sign-verify-certificate">Sign &amp; verify certificate</h3>
+<pre><code class="language-php">$kpath = &quot;file:///home/churchill/.ssh/id_rsa&quot;
+$cpath = &quot;file:///home/churchill/.ssh/cacert.pem&quot;
+
+// $oCsr = Strukt\Ssl\All::keyPath($kpath)-&gt;withCert($cpath);
+$oCsr = ssl($kpath)-&gt;withCert($cpath);
+$cert = $oCsr-&gt;sign();
+$success = $oCsr-&gt;verify($cert);
+</code></pre>
+<h2 id="note">Note</h2>
+<p>For local keys in your project or project root. Example:</p>
+<pre><code class="language-bash">├── strukt     # Private Key
+└── strukt.pub # Public Key
+</code></pre>
+<p>You can use helper <code>local</code> to localize your path to url:</p>
+<pre><code class="language-php">$k = ssl(local(&quot;strukt&quot;));
+// $p = keypair()-&gt;setPublicKey(local(&quot;strukt.pub&quot;));
+</code></pre>
+<h1 id="strukt-process">Strukt Process</h1>
+<p>PHP Process Execution</p>
+<h2 id="installation">Installation</h2>
+<pre><code class="language-bash">composer require strukt/process v1.0.1
+</code></pre>
+<h2 id="demo">Demo</h2>
+<pre><code class="language-php">#!/usr/bin/env php
+&lt;?php
+
+use Strukt\Process;
+
+require &#39;vendor/autoload.php&#39;;
+
+// $password = &quot;p@55w0rd&quot;;
+
+// $p = Process::run([&quot;ls&quot;, &quot;ls -al&quot;]);
+// $p = Process::run([&quot;read password ; echo \$password&quot;], function(){
+$ps = Process::run([&quot;ping 127.0.0.1&quot;], function($streamOutput){
+
+    echo $streamOutput;
+    //wait 5 seconds before continuing
+    // sleep(5);
+});
+
+// $p = $ps-&gt;current();
+
+// $p-&gt;write($password);
+// $p-&gt;closeInput();
+
+// $error = $p-&gt;error();
+// $output = $p-&gt;read();
+</code></pre>
+<h1 id="strukt-event">Strukt Event</h1>
+<p>This is not an <code>event-loop</code> it has events and loops.</p>
+<h2 id="events">Events</h2>
+<pre><code class="language-php">$cred = array(&quot;uname&quot;=&gt;&quot;admin&quot;, &quot;pword&quot;=&gt;&quot;p@55w0rd&quot;);
+$login = Strukt\Event::create(fn($uname, $pword)=&gt;$uname == $cred[&quot;uname&quot;] &amp;&amp; $pword == $cred[&quot;pword&quot;]);
+$isLoggedIn = $login-&gt;apply(&quot;admin&quot;,&quot;p@55w0rd&quot;)-&gt;exec();
+// $isLoggedIn = $login-&gt;applyArgs($credentials)-&gt;exec();
+</code></pre>
+<h2 id="reflector">Reflector</h2>
+<pre><code class="language-php">// $r = Strukt\Ref::createFrom(new Payroll\User);
+$r = ref(Payroll\User::class);
+$r-&gt;getRef();//ReflectionClass
+//$r-&gt;noMake();//newInstanceWithoutConstructor
+$r-&gt;make(&quot;pitsolu&quot;);//newInstanceArgs
+$r-&gt;getInstance();//InstanceOf Payroll\AuthModule\Model\User
+$r-&gt;prop(&quot;id&quot;)-&gt;getRef();//ReflectionProperty
+$r-&gt;prop(&quot;id&quot;)-&gt;set(1);
+$r-&gt;prop(&quot;id&quot;)-&gt;get();//1
+$r-&gt;method(&quot;getUsername&quot;)-&gt;invoke();//pitsolu
+$r-&gt;method(&quot;getUsername&quot;)-&gt;getRef(); //ReflectionMethod
+$r-&gt;method(&quot;getUsername&quot;)-&gt;getClosure();//Closure
+ref(&quot;array_sum&quot;)-&gt;invoke([1,2]);//3
+ref(&quot;array_sum&quot;)-&gt;getRef();//ReflectionFunction
+</code></pre>
+<h2 id="loop">Loop</h2>
+<pre><code class="language-php">use Strukt\Loop;
+# use Strukt\Cmd;
+
+Loop::add(&quot;auth&quot;, [&quot;admin&quot;, &quot;p@55w0rd&quot;], function($username, $password){
+
+    echo sprintf(&quot;username:%s|password:%s\n&quot;, $username, $password);
+});
+
+Loop::add(&quot;help&quot;, function(){
+
+    echo &quot;Docs\n&quot;;
+});
+
+// Loop::add(&quot;hello&quot;, function($name){
+
+//     echo sprintf(&quot;Hello %s&quot;, $name);
+// });
+
+Loop::run();
+// Cmd::exec(&quot;help&quot;);
+// Cmd::exec(&quot;auth&quot;, [&quot;peter&quot;, &quot;pazzw0rd&quot;]);
+// Cmd::exec(&quot;hello&quot;, [&quot;World&quot;]);
+</code></pre>
+<h1 id="strukt-fs">Strukt Fs</h1>
+<p>Basic filesystem functionality. </p>
+<h2 id="usage">Usage</h2>
+<h3 id="api">API</h3>
+<pre><code class="language-php">Strukt\Fs::isDir(file) //Directory Exists
+Strukt\Fs::isFile(file) //File Exists
+Strukt\Fs::isPath(path) //Path Esists
+Strukt\Fs::cat(file) //Dump File Contents
+Strukt\Fs::touch(file) //Create File
+Strukt\Fs::touchWrite(file, contents) //Create Write To File
+Strukt\Fs::rename(from, to) //Rename File
+Strukt\Fs::overwrite(file, contents) //Overwrite File Contents
+Strukt\Fs::appendWrite(file, contents) //Append Contents To File
+Strukt\Fs::rm(file) //Delete File
+Strukt\Fs::rmdir(dir) //Recursively Delete
+Strukt\Fs::mkdir(dir) //Recursively Create
+Strukt\Fs::isWritable(file) //Check If File Is Writeable
+Strukt\Fs::isReadable(file) //Check If File is Readable
+Strukt\Fs::copyRecur(source,destination) //Copy recursively
+Strukt\Fs::cpr(source,destination) //Alias for copyRecur
+Strukt\Fs::listFilesRecur(path) //List directory files recursively
+Strukt\Fs::lsr(path) //Alias for listFilesRecur
+Strukt\Fs::tail(filepath, lines = 20) //read last line of file: default 20 lines
+Strukt\Fs::isWindows()//Is OS Windows
+Strukt\Fs::dirSep(path)//OS appropriate directory separator on path
+Strukt\Fs::ds(path)//Alisas for dirSep
+</code></pre>
+<h3 id="helpers">Helpers</h3>
+<pre><code class="language-php">fs(); #Strukt\Fs
+fs(&quot;.&quot;); #Strukt\Local\Fs
+tail(&quot;README.md&quot;);
+ds(&quot;src/Strukt/Contract&quot;); # Change directory separator depending on OS
+path_exists(&quot;src/Strukt/Contract&quot;);
+phar()-&gt;active(); # Detect is code is inside a Phar archive
+phar(&quot;src/Strukt/Contract&quot;)-&gt;adapt(); # Adapt to Phar path if in Phar archive, otherwise return qualified path
+</code></pre>
+<h1 id="strukt-generator">Strukt Generator</h1>
+<h2 id="intro">Intro</h2>
+<p>Simple package for generating templates and reading annotations.</p>
+<h2 id="templator">Templator</h2>
+<pre><code class="language-php">$data = array(
+
+    &quot;title&quot; =&gt; &quot;The Title&quot;,
+    &quot;subtitle&quot; =&gt; &quot;Subtitle&quot;,
+    &quot;footer&quot; =&gt; &quot;Foot&quot;,
+    &quot;people&quot; =&gt; array(
+
+        array(&quot;name&quot; =&gt; &quot;Steve&quot;,&quot;surname&quot; =&gt; &quot;Johnson&quot;),
+        array(&quot;name&quot; =&gt; &quot;James&quot;, &quot;surname&quot; =&gt; &quot;Johnson&quot;),
+        array(&quot;name&quot; =&gt; &quot;Josh&quot;, &quot;surname&quot; =&gt; &quot;Smith&quot;)
+    ),
+    &quot;page&quot; =&gt; &quot;Home&quot;
+);
+
+$tpl = &quot;&lt;html&gt;
+&lt;title&gt;{{title}}&lt;/title&gt;
+&lt;body&gt;
+&lt;h1&gt;{{subtitle}}&lt;/h1&gt;
+{{begin:people}}
+&lt;b&gt;{{name}}&lt;/b&gt; {{surname}}&lt;br /&gt;
+{{end:people}}
+&lt;br /&gt;&lt;br /&gt;
+&lt;i&gt;{{footer}}&lt;/i&gt;
+&lt;/body&gt;
+&lt;/html&gt;&quot;;
+
+// $output = Strukt\Templator::create($tpl, $data);
+$output = template($tpl, $data);
+</code></pre>
+<h2 id="annotations">Annotations</h2>
+<p>Annotation supported format:</p>
+<pre><code class="language-php">/**
+* @Route(/)
+*/
+class DefaultController{
+
+    /**
+    * @Route(/hello/{to:alpha})
+    * @Method(POST, GET)
+    * @Provides(application/html) 
+    */
+    function hello($to){ ...
+
+    /**
+    * @Route(/login)
+    * @Method(GET)
+    * @Secure(username=test, password=test)
+    * @Expects(username,password)
+    *
+    * note the below will not be parsed
+    * @param str $username
+    * @param str $password
+    */
+    function login($username, $password){ ...
+</code></pre>
+<p>Run parser:</p>
+<pre><code class="language-php">// $parser = new \Strukt\Annotation\Parser\Basic(new \ReflectionClass(Controller\DefaultController::class));
+// print_r($parser-&gt;getNotes());
+print_r(notes(Controller\DefaultController::class))
+</code></pre>
+<h1 id="strukt-math">Strukt Math</h1>
+<h2 id="number-value-objects-">Number (Value Objects)</h2>
+<pre><code class="language-php">$num = number(1000);
+$num = $num-&gt;add(200);//1200
+$num = $num-&gt;subtract(100);//1100
+$num = $num-&gt;times(2);//2200 multiplication
+$num = $num-&gt;parts(4);//550 division
+$rem = $num-&gt;mod(9);//1 modulus
+$num = $num-&gt;raise(2);//302500 power
+list($num1, $num2) = $num-&gt;ratio(1,1);//151250,151250
+list($num1, $num2) = $num-&gt;ratio(1,3);//75625,226875
+list($num1, $num2, $num3) = $num-&gt;ratio(1,1,3);//60500,60500,181500
+$num-&gt;gt(302499);//true; greaterthan
+$num-&gt;gte(302500);//true greaterthanorequals
+$num-&gt;lt(302499);//false lessthan
+$num-&gt;lte(302501);//true lessthanorequals
+$num-&gt;negate()-&gt;equals(-302500)  
+$num-&gt;yield();//return native number
+$num-&gt;reset();//0
+Number::create(1000000)-&gt;format();//1,000,000.00
+Number::create(20.5111111)-&gt;round(2);//20.51
+Number::random(4, 10, 20); //return 4 random numbers between 10 and 20
+Number::create(10.1)-&gt;type();//double
+echo $num;//return native number
+</code></pre>
+<h2 id="matrix">Matrix</h2>
+<pre><code class="language-php">// $a = array(array(1,2,3),array(4,5,6),array(7,8,9));
+$a = array(
+
+    array(1,2,3),
+    array(4,5,6),
+    array(7,8,9)
+);
+
+// $b = array(array(11,22,33),array(44,55,66),array(77,88,99));
+$b = array(
+
+    array(11,22,33),
+    array(44,55,66),
+    array(77,88,99)
+);
+
+
+$c = (string)matrix($a)-&gt;multiply($b);
+/** Result
+[330,396,462]
+[726,891,1056]
+[1122,1386,165]
+**/
+
+$c = matrix($a)-&gt;multiply($b)-&gt;yield();
+/** Result
+array(
+    array(330,396,462),
+    array(726,891,1056),
+    array(1122,1386,1650)
+)
+*/
+</code></pre>
+<h2 id="monad">Monad</h2>
+<pre><code class="language-php">// Linear Equation y = mx + c
+
+$params = array(&quot;c&quot;=&gt;12, &quot;m&quot;=&gt;3, &quot;x&quot;=&gt;2)
+
+// $y = monos($params)
+//         -&gt;next(fn($m, $x)=&gt;$m * $x)
+//         -&gt;next(fn($mx, $c)=&gt;$mx + $c)
+//         -&gt;next(fn($r)=&gt;$r);
+
+$y = monos($params)-&gt;next(fn($m, $x)=&gt;$m * $x)-&gt;next(fn($mx, $c)=&gt;$mx + $c)-&gt;next(fn($r)=&gt;$r);
+
+echo $y-&gt;yield();
+</code></pre>
+<h1 id="strukt-base">Strukt Base</h1>
+<p>Base functionality for helpers</p>
+<h3 id="usage">Usage</h3>
+<pre><code class="language-bash">psysh vendor/autoload.php
+</code></pre>
+<p>Inside <code>Psysh</code></p>
+<pre><code class="language-php">&gt;&gt;&gt; helper()
+&gt;&gt;&gt; helper(&quot;base&quot;)
+[
+    &quot;helper_add&quot;
+]
+</code></pre>
+<h3 id="conclusion">Conclusion</h3>
+<p>Install <code>strukt\install</code> and try shell functionality for better understanding.</p>
+<h1 id="tasker">Tasker</h1>
+<p>A simple task manager for php.</p>
+<h2 id="getting-started">Getting started</h2>
+<pre><code class="language-bash">wget https://github.com/samweru/strukt-tasker/releases/download/v1.0.1-alpha/tasker.phar #download
+chmod a+x tasker.phar #make executable
+mv tasker.phar tasker #rename
+</code></pre>
+<h2 id="usage">Usage</h2>
+<p>By default, task manager will create <code>tasker.php</code> file if one isn&#39;t found when you execute the tasker command.</p>
+<p>The intial <code>tasker.php</code> file contains a single command <code>test</code>. </p>
+<p>How to list commands:</p>
+<pre><code class="language-bash">$ tasker list
+
+ version         Tasker version
+ list            List commands
+ test            Sample task
+</code></pre>
+<p>Below is sample <code>tasker.php</code></p>
+<pre><code class="language-php">
+/**
+ * Show today&#39;s date
+ */
+task(&#39;date&#39;, function(){
+
+    $date = new \DateTime();
+
+    echo(sprintf(&quot;Now: %s\n&quot;, $date-&gt;format(&quot;Y-m-d H:i:s&quot;)));
+});
+
+/**
+ * Say hello to someone
+ */
+task(&quot;hello&quot;, function(string $name){
+
+    writeln(sprintf(&quot;Hello %s!&quot;, $name));
+});
+
+/**
+ * Say hello to the world
+ */
+task(&#39;test&#39;, function(){
+
+    go(&quot;hello&quot;, &quot; World!&quot;);
+});
+
+/**
+ * Watch changes in javascript files
+ */ 
+task(&quot;watch:js&quot;, function(){
+
+    watch(&quot;app/js&quot;, function($files){
+
+        $changes = [];
+        foreach($files as $file)
+            $changes[] = sprintf(&quot;%s\n&quot;, $file);
+
+        print_r(implode(&quot;\n&quot;, $changes));
+    });
+});
+
+/**
+ * List directories
+ */
+task(&quot;lsdir&quot;, function(){
+
+    list($output, $error) = run(&quot;ls -al&quot;, function($output){
+
+        echo $output;
+    });
+});
+</code></pre>
+<h2 id="boxing">Boxing</h2>
+<p>First you&#39;ll need to install <a href="https://github.com/phar-io/phive">phive</a></p>
+<pre><code class="language-bash">wget -O phive.phar https://phar.io/releases/phive.phar
+wget -O phive.phar.asc https://phar.io/releases/phive.phar.asc
+gpg --keyserver hkps://keys.openpgp.org --recv-keys 0x9D8A98B29B2D5D79
+gpg --verify phive.phar.asc phive.phar
+chmod +x phive.phar
+sudo mv phive.phar /usr/local/bin/phive
+</code></pre>
+<p>Then, install <a href="https://github.com/box-project/box">Box</a> globally.</p>
+<pre><code class="language-bash">phive install humbug/box --force-accept-unsigned
+</code></pre>
+<p>..and update.</p>
+<pre><code class="language-bash">phive update humbug/box --force-accept-unsigned
+</code></pre>
+<p>..or install <code>Box</code> locally.</p>
+<pre><code class="language-bash">composer require --dev bamarni/composer-bin-plugin
+composer bin box require --dev humbug/box
+
+vendor/bin/box
+</code></pre>
+<p>..or </p>
+<pre><code class="language-bash">$ curl -LSs https://box-project.github.io/box2/installer.php | php
+</code></pre>
+<h1 id="strukt-queue">Strukt Queue</h1>
+<p>Simple implementation of a Message Queue<br>that uses Memcached <a href="https://memcached.org/">https://memcached.org/</a><br>as backend</p>
+<p>Needs PHP Memcached extensions installed to work properly</p>
+<h3 id="requirements">Requirements</h3>
+<pre><code class="language-bash">sudo apt install memcached
+sudo apt install php-memcached
+sudo apt install libmemcached-tools # cli tools
+</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="wait">Wait</h3>
+<pre><code class="language-php">//wait.php
+$data = [&quot;username&quot;=&gt;&quot;pitsolu&quot;, &quot;password&quot;=&gt;&quot;p@55w0rd&quot;];
+wait(&quot;queue_test&quot;, $data, function($reply){
+
+    print_r($reply);
+});
+</code></pre>
+<h3 id="reply">Reply</h3>
+<pre><code class="language-php">//reply.php
+reply(&quot;queue_test&quot;, function($data){
+
+    $data[&quot;processed&quot;] = true;
+
+    return $data;
+});
+</code></pre>
+<h2 id="other-usages">Other Usages</h2>
+<h3 id="pop">Pop</h3>
+<pre><code class="language-php">$data = array(
+    &quot;username&quot;=&gt;&quot;pitsolu&quot;, 
+    &quot;password&quot;=&gt;&quot;p@55w0rd&quot;
+);
+
+$uid = push(&quot;queue_test&quot;, $data);
+</code></pre>
+<h3 id="push">Push</h3>
+<pre><code class="language-php">list($oid, $udata) = pop(&quot;queue_test&quot;);
+
+print_r(array(
+
+    &quot;uid&quot;=&gt;$uid,
+    &quot;oid&quot;=&gt;$oid,
+    &quot;data&quot;=&gt;$data,
+    &quot;udata&quot;=&gt;$udata
+));
+</code></pre>
+<h2 id="credits">Credits</h2>
+<pre><code>@author Maurizio Giunti https://www.mauriziogiunti.it / https://codeguru.it
+@license MIT
+</code></pre><h1 id="strukt-owl">Strukt Owl</h1>
+<p>AI package. Mostly text analysis. More to come...</p>
+<p>&lt;!-- ![Won](/home/pitsolu/Desktop/dev/php/strukt/strukt-owl/owl.jpg &quot;Owl&quot;) --&gt;
+</p>
+<p>&lt;center&gt;&lt;img src=&quot;/home/pitsolu/Desktop/dev/php/strukt/strukt-owl/owl.jpg&quot; width=&quot;200&quot; height=&quot;200&quot;&gt;&lt;/center&gt;
+
+</p>
+<h2 id="usage">Usage</h2>
+<h3 id="sentiment-analysis-vader-score">Sentiment Analysis: Vader Score</h3>
+<pre><code class="language-php">$text = &quot;From Oasis&#39; first ever single to the name of Noel and Liam&#39;s long-suffering mother, just how well do YOU know the band? Take MailOnline&#39;s ultimate quiz&quot;;
+
+probe($text);
+</code></pre>
+<h3 id="tags-ranking">Tags: Ranking</h3>
+<pre><code class="language-php">
+// use tags function
+tags($text); //get all tags
+
+// get to 10 tags above 0.9 ranking
+arr(tags($text))-&gt;each(fn($k,$v)=&gt;number($v)-&gt;gt(0.9)?$k:null)-&gt;filter()-&gt;values()-&gt;yield()
+</code></pre>
+<h3 id="summarize">Summarize</h3>
+<pre><code class="language-php">$text = fs()-&gt;cat(&quot;news.txt&quot;);
+
+summary($text);
+</code></pre>
+<h3 id="highlights">Highlights</h3>
+<pre><code class="language-php">$text = fs()-&gt;cat(&quot;news.txt&quot;);
+
+highlights($text);
+</code></pre>
+<h2 id="credits">Credits</h2>
+<pre><code>- TextRank https://github.com/davmixcool/php-sentiment-analyzer
+- PHP Sentiment Analyzer https://github.com/DavidBelicza/PHP-Science-TextRank
+</code></pre><h1 id="strukt-contract">Strukt Contract</h1>
+<p>Abstract Classes and Interfaces for Strukt Framework</p>
+<pre><code class="language-bash">src/
+└── Strukt
+    └── Contract
+        ├── Http
+        │   ├── Error
+        │   │   └── HttpErrorInterface.php
+        │   ├── RequestInterface.php
+        │   ├── ResponseInterface.php
+        │   └── SessionInterface.php
+        ├── MiddlewareInterface.php
+        ├── ProviderInterface.php
+        └── UserInterface.php
+</code></pre>
+<h1 id="strukt-db">Strukt Db</h1>
+<h3 id="transaction">Transaction</h3>
+<pre><code class="language-php">
+require &quot;bootstrap.php&quot;;
+
+useDb(&quot;pop&quot;);
+
+pdo()-&gt;transact(function(){
+
+    $role = db(&quot;role&quot;);
+    $role-&gt;name = &quot;superadmin&quot;;
+    $role-&gt;save();
+
+    $user = db(&quot;user&quot;);
+    $user-&gt;username = &quot;sadmin@tenure&quot;;
+    $user-&gt;password = sha1(&quot;p@55w0rd!!&quot;);
+    $user-&gt;role_id = &quot;abc&quot;; //invalid entry expect a number
+    $user-&gt;save();
+});
+</code></pre>
+<h3 id="commands">Commands</h3>
+<pre><code class="language-bash">Database
+ model:make      Make model
+ db:make-models  Make models from db
+ db:make         Make db from models
+ db:seeds        Seed database tables iwth JSON set (folder)
+ db:wipe         Truncate database
+ db:sql          Truncate database
+</code></pre>
+<h3 id="sql">SQL</h3>
+<pre><code class="language-sql">├── modify(string $table)
+│   ├── addSet(string $modify)
+│   ├── set(string $modify)
+│   │   ├── andWhere(string $condition)
+│   │   ├── orWhere(string $condition)
+│   │   ├── where(string $condition)
+│   │   └── yield():string
+│   └── yield():string
+└── select(string $fields)
+    ├── addSelect(string $fields)
+    ├── from(string $tables)
+    │   └── leftjoin(string $join)
+    ├── groupBy(string $columns)
+    ├── limit(int $limit)
+    ├── orderBy(string $columns, string $order = &quot;DESC&quot;)
+    ├── page(int $page, int $perPage=10)
+    ├── union(string $sql)
+    ├── unionAll(string $sql)
+    └── where(string $condition)
+        ├── andWhere(string $condition)
+        └── orWhere(string $condition)
+</code></pre>
+<h1 id="strukt-asset">Strukt Asset</h1>
+<h3 id="installation">Installation</h3>
+<pre><code class="language-bash">composer require strukt/pkg-asset:v1.0.6-alpha
+</code></pre>
+<p>If need be you need to install the middlewares, providers and commands:</p>
+<pre><code class="language-bash">./console publish:package pkg-asset
+</code></pre>
+<h3 id="simple-asset-manager">Simple Asset Manager</h3>
+<pre><code class="language-php">$finder = new \Strukt\Asset($root_dir, $static_dir);
+$finder-&gt;exists(&quot;/js/script.js&quot;);
+$finder-&gt;getInfo(&quot;/js/script.js&quot;);//SplFileInfo
+$finder-&gt;get(&quot;/js/script.js&quot;);//returns contents of file
+</code></pre>
+<h3 id="image-resize">Image Resize</h3>
+<pre><code class="language-php">$image = new \Gumlet\ImageResize();
+$image = new \Gumlet\ImageResize(&#39;image.jpg&#39;);
+$image-&gt;scale(50);
+$image-&gt;save(&#39;image2.jpg&#39;)
+
+$image = new \Gumlet\ImageResize(&#39;image.jpg&#39;);
+$image-&gt;resizeToHeight(500);
+$image-&gt;save(&#39;image2.jpg&#39;)
+</code></pre>
+<p>For more on <code>Gumlet</code> see <a href="https://github.com/gumlet/php-image-resize">Gumlet/ImageResize</a> on Github.</p>
+<h1 id="strukt-auth">Strukt Auth</h1>
+<pre><code class="language-bash">package/
+├── pop-db
+│   └── app
+└── red-db
+    └── app
+</code></pre>
+<h1 id="strukt-tests">Strukt Tests</h1>
+<h3 id="installation">Installation</h3>
+<pre><code class="language-bash">composer require strukt/pkg-tests:v1.0.1
+</code></pre>
+<h2 id="getting-started">Getting Started</h2>
+<p>Project <code>strukt/pkg-tests</code> is a <code>strukt</code> module.</p>
+<h3 id="installation">Installation</h3>
+<p>Install and publish <code>strukt/pkg-tests</code>:</p>
+<pre><code class="language-bash">console generate:app nameofyourapp
+composer require strukt/pkg-tests
+console publish:package pkg-tests
+</code></pre>
+<p>There is a list of console commands for preparing your authentication.</p>
+<pre><code class="language-bash">$ ./console -l
+
+Strukt Console
+==============
+...
+...
+PhpUnit
+ test:ls           List Tests 
+ test:run          Execute Tests
+</code></pre>
+<h2 id="package-development">Package Development</h2>
+<p>This package will require installation into your <code>app/src/{{AppName}}</code> folder.<br>The <code>publish:package</code> command takes argument <code>package</code> if you inicate key <code>package</code> in<br>your <code>cfg/repo.php</code> file for value <code>Strukt\Package\PkgTests::class</code>. Since your source<br>will be in the root folder in a subfolder called <code>package</code> it will allow the publisher<br>to install files in the your app source folder <code>app/src</code>.</p>
+<pre><code class="language-bash">./console publish:package package
+</code></pre>
+<p>Have a good one!</p>
+</body>
+</html>
