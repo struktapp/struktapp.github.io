@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Convert README.md to index.html using markdown
+README="/home/pitsolu/Desktop/dev/php/strukt/strukt4/struktapp.github.io/README.md"
+OUTPUT="/home/pitsolu/Desktop/dev/php/strukt/strukt4/struktapp.github.io/index.html"
+
+# Try using pandoc if available
+if command -v pandoc &> /dev/null; then
+    pandoc "$README" -f markdown -t html -s --css=style.css -o "$OUTPUT" --metadata title="Strukt PHP Framework"
+    echo "Generated with pandoc"
+    exit 0
+fi
+
+# Try using markdown if available
+if command -v markdown &> /dev/null; then
+    markdown "$README" > "$OUTPUT"
+    echo "Generated with markdown"
+    exit 0
+fi
+
+# Fallback: use Python
+python3 << PYEOF
+import markdown
+with open('$README', 'r') as f:
+    content = f.read()
+html = markdown.markdown(content, extensions=['tables', 'fenced_code', 'codehilite'])
+with open('$OUTPUT', 'w') as f:
+    f.write('<!DOCTYPE html>\n<html>\n<head>\n<meta charset="utf-8">\n<title>Strukt PHP Framework</title>\n<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown.min.css">\n<style>body{box-sizing:border-box;min-width:200px;max-width:980px;margin:0 auto;padding:45px}</style>\n</head>\n<body class="markdown-body">\n')
+    f.write(html)
+    f.write('\n</body>\n</html>')
+PYEOF
+echo "Generated with Python markdown"

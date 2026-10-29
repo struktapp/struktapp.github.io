@@ -1,0 +1,158 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Generate index.html from docs/*.md files in a specified order.
+ *
+ * Order: framework, router, commons, console, fs, cache, base, ar, orm,
+ *        key, contract, event, form, generator, math, process, queue, owl, rules
+ */
+
+define('DIR', __DIR__ . '/..');
+define('DOCS_DIR', DIR . '/docs');
+define('OUTPUT', DIR . '/index.html');
+
+$order = [
+    'framework',
+    'router',
+    'commons',
+    'console',
+    'fs',
+    'cache',
+    'base',
+    'ar',
+    'orm',
+    'key',
+    'contract',
+    'event',
+    'form',
+    'generator',
+    'math',
+    'process',
+    'queue',
+    'owl',
+    'rules',
+];
+
+function extractTitleFromMd(string $mdContent): string
+{
+    // Try # Title format at start
+    if (preg_match('/^#\s+(.+)$/m', $mdContent, $m)) {
+        return trim($m[1]);
+    }
+    // Try underlined title
+    if (preg_match('/^(.+?)\n[=]{3,}$/m', $mdContent, $m)) {
+        return trim($m[1]);
+    }
+    if (preg_match('/^(.+?)\n[-]{3,}$/m', $mdContent, $m)) {
+        return trim($m[1]);
+    }
+    // Fallback to first line
+    $firstLine = trim(explode("\n", $mdContent)[0]);
+    return $firstLine ?: 'Untitled';
+}
+
+function slugify(string $text): string
+{
+    $text = trim($text);
+    $text = preg_replace('/[^a-zA-Z0-9]+/', '-', $text);
+    $text = trim($text, '-');
+    return strtolower($text);
+}
+
+$sections = [];
+$tocEntries = [];
+
+foreach ($order as $name) {
+    $path = DOCS_DIR . '/' . $name . '.md';
+    if (!file_exists($path)) {
+        error_log("Warning: $path not found, skipping.\n");
+        continue;
+    }
+
+    $raw = file_get_contents($path);
+    if ($raw === false) {
+        continue;
+    }
+
+    // Convert using markdown command
+    $cmd = "markdown {$path} -s github-markdown.css 2>/dev/null";
+    $html = shell_exec($cmd);
+    if ($html === '') {
+        continue;
+    }
+
+    // Extract title from markdown
+    $title = extractTitleFromMd($raw);
+
+    // Extract headings from the HTML for TOC
+    preg_match_all('/<h([12])[^>]*id="([^"]+)"[^>]*>([^<]+)<\/h[12]>/', $html, $headingMatches, PREG_SET_ORDER);
+    foreach ($headingMatches as $hm) {
+        $tocEntries[] = [
+            'level' => (int)$hm[1],
+            'id' => $hm[2],
+            'text' => trim($hm[3]),
+            'section' => $name,
+        ];
+    }
+
+    $sections[] = [
+        'name' => $name,
+        'title' => $title,
+        'html' => $html,
+    ];
+}
+
+// Build TOC
+$tocHtml = '<ul>';
+$prevLevel = 0;
+
+foreach ($tocEntries as $entry) {
+    $level = $entry['level'];
+
+    if ($level < $prevLevel) {
+        $tocHtml .= str_repeat('</li></ul>', $prevLevel - $level + 1);
+    } elseif ($level > $prevLevel) {
+        $tocHtml .= str_repeat('<ul>', $level - $prevLevel);
+    }
+
+    $tocHtml .= '<li><a href="#' . $entry['id'] . '">' . htmlspecialchars($entry['text']) . '</a>';
+    $prevLevel = $level;
+}
+
+// Close remaining
+$tocHtml .= str_repeat('</li></ul>', $prevLevel + 1);
+$tocHtml .= '</ul>';
+
+// Build final HTML
+$out = [];
+$out[] = '<!DOCTYPE html>';
+$out[] = '<html>';
+$out[] = '<head>';
+$out[] = '  <title>Strukt</title>';
+$out[] = '  <meta name="viewport" content="width=device-width, initial-scale=1.0">';
+$out[] = '  <link rel="stylesheet" href="github-markdown.css">';
+$out[] = '  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">';
+$out[] = '  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>';
+$out[] = '  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>';
+$out[] = '  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>';
+$out[] = '  <script>hljs.highlightAll();</script>';
+$out[] = '</head>';
+$out[] = '<body>';
+$out[] = '<h1 id="strukt">Strukt</h1>';
+$out[] = '<p><strong>Table of Contents</strong></p>';
+$out[] = $tocHtml;
+$out[] = '<div class="content">';
+
+// Add a heading for each section with title
+foreach ($sections as $section) {
+    $out[] = '<h2 id="' . slugify($section['title']) . '">' . htmlspecialchars($section['title']) . '</h2>';
+    $out[] = $section['html'];
+}
+
+$out[] = '</div>';
+$out[] = '</body>';
+$out[] = '</html>';
+
+file_put_contents(OUTPUT, implode("\n", $out));
+echo "Generated " . OUTPUT . " (" . count($sections) . " sections)\n";
